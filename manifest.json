@@ -1,0 +1,16 @@
+﻿{
+  "manifest_version": 2,
+  "minimum_chrome_version": "63",
+  "name": "Copy link text",
+  "version": "1.0.0",
+  "author": "tophf",
+  "description": "Adds a context menu to copy the clicked link's text",
+  "permissions": [
+    "contextMenus",
+    "activeTab"
+  ],
+  "background": {
+    "scripts": ["bg.js"],
+    "persistent": false
+  }
+}
