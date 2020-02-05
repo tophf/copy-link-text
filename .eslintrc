@@ -88,7 +88,7 @@ rules:
   no-empty-character-class: [2]
   no-empty-function: [0]
   no-empty-pattern: [2]
-  no-empty: [2, {allowEmptyCatch: true}]
+  no-empty: [0]
   no-eq-null: [2]
   no-eval: [2]
   no-ex-assign: [2]

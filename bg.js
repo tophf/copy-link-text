@@ -14,12 +14,19 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   chrome.tabs.executeScript(tab.id, {
     frameId: info.frameId,
     runAt: 'document_start',
-    code: 'document.activeElement.innerText',
+    code: `(${pierceShadow})()`,
   }, ([text]) => {
     if (!chrome.runtime.lastError && text)
       copyToClipboard(text);
   });
 });
+
+function pierceShadow() {
+  let el;
+  let root = document;
+  while ((el = root.activeElement) && (root = el.shadowRoot)) {}
+  return el.innerText;
+}
 
 function copyToClipboard(text) {
   const el = document.createElement('textarea');
