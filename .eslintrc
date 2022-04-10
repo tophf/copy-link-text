@@ -1,7 +1,7 @@
 # https://github.com/eslint/eslint/blob/master/docs/rules/README.md
 
 parserOptions:
-  ecmaVersion: 2018
+  ecmaVersion: 2021
 
 env:
   browser: true
@@ -223,3 +223,10 @@ rules:
   wrap-iife: [2, inside]
   yield-star-spacing: [2, {before: true, after: false}]
   yoda: [2, never]
+
+overrides:
+  - files: bg.js
+    env:
+      es6: true
+      serviceworker: true
+      webextensions: true
