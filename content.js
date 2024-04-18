@@ -3,7 +3,11 @@
 {
   let el;
   let root = document;
-  while ((el = root.activeElement) && (root = el.shadowRoot)) {}
+  const getRoot = chrome.dom?.openOrClosedShadowRoot;
+  while (
+    (el = root.activeElement) &&
+    (root = el.shadowRoot || (getRoot ? getRoot(el) : el.openOrClosedShadowRoot))
+  ) {}
   const text = el.innerText;
   const {clipboard} = navigator;
   if (clipboard) {
