@@ -11,15 +11,16 @@
   } else {
     const sel = getSelection();
     const {anchorNode, anchorOffset, focusNode, focusOffset} = sel;
-    const el = document.createElement('textarea');
-    el.style.cssText = 'all:revert; position:fixed; top: 0; left: 0; visibility:hidden;'
+    const t = document.createElement('textarea');
+    t.style.cssText = 'all:revert; position:fixed; top: 0; left: 0; visibility:hidden;'
       .replace(/;/g, '!important');
-    el.value = text;
-    document.body.appendChild(el);
-    el.focus({preventScroll: true});
-    el.select();
+    t.value = text;
+    document.body.appendChild(t);
+    t.focus({preventScroll: true});
+    t.select();
     document.execCommand('copy');
-    el.remove();
+    el.focus();
+    t.remove();
     sel.setBaseAndExtent(anchorNode, anchorOffset, focusNode, focusOffset);
   }
 }
