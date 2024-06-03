@@ -46,7 +46,6 @@ function findActiveElement() {
   let root = document;
   const getRoot = chrome.dom?.openOrClosedShadowRoot;
 
-  // Refactored version of the original fork's code... not sure if this is the best way.
   active = root.activeElement;
   while (active) {
     root = active.shadowRoot || (getRoot ? getRoot(active) : active.openOrClosedShadowRoot);
@@ -58,7 +57,6 @@ function findActiveElement() {
   return active;
 }
 
-// The original fork had a hacky backup way of copying to the clipboard which was removed.
 function writeClipboard(text) {
   console.log("Writing to clipboard: ", text);
   const { clipboard } = navigator;
