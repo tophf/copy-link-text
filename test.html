@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Test - Copy link text</title>
+  </head>
+  <body>
+    <p><a href="">Copy link text</a></p>
+    <p><a href="">Hello world</a></p>
+    <p><a href="test" style="display: none">Hidden test</a></p>
+    <p><a href="test" oncontextmenu="testActive()">Focus body</a></p>
+
+    <!-- Focusable div, to emulate Jira's complex DOM -->
+    <div id="test" tabindex="0"></div>
+
+    <script>
+      function testActive() {
+        console.log("Setting test div as active");
+        document.getElementById("test").focus();
+      }
+    </script>
+  </body>
+</html>
