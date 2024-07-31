@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-/** To close the offscreen document before terminating the background script. */
-let timeout;
+/** @type {chrome.runtime.Port} */
+let port;
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
@@ -14,7 +14,6 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
-  clearTimeout(timeout);
   const tabId = tab.id;
   const {frameUrl, frameId} = info;
   const isCrossOrigin = frameId &&
@@ -36,10 +35,9 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (isCrossOrigin)
     chrome.permissions.remove({origins: [frameUrl]});
   if (!err) {
-    await initOffscreen();
-    chrome.runtime.sendMessage(result);
+    if (!port) await initOffscreen();
+    port.postMessage(result);
   }
-  timeout = setTimeout(chrome.offscreen.closeDocument, 25e3);
 });
 
 function findLink() {
@@ -62,4 +60,11 @@ async function initOffscreen() {
   } catch (err) {
     if (!err.message.startsWith('Only a single offscreen')) throw err;
   }
+  port = chrome.runtime.connect();
+  port.onDisconnect.addListener(onOffscreenClosed);
+}
+
+/** Fired if the offscreen document was killed or closed */
+function onOffscreenClosed() {
+  port = null;
 }
